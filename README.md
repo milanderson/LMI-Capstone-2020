@@ -1,12 +1,11 @@
 # Open Policy Rule Matching
 
 ## Description
-This tools is intended to score a text's relative relevance to a fixed set of texts. The tool is intended for use by CMS.
-
-## Data
-The provided data can be downloaded at [link](http://www.example linkis.org)
--public comments on the CMS's proposed rule changes
--The proposed rules changes
--Metadata giving each comments appropriate labels
+This tool is intended to score a text's relative relevance to a fixed set of texts. A working demo using CMS rules and comments is available at -----.
 
 ## Usage
+
+## Example Project
+- Example data can be downloaded using 'python Examples/Utils/CMSScraper.py CMS-1701-P'
+
+
