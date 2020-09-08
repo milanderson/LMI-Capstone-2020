@@ -6,6 +6,6 @@ This tool is intended to score a text's relative relevance to a fixed set of tex
 ## Usage
 
 ## Example Project
-- Example data can be downloaded using 'python Examples/CMS/Utils/CMSScraper.py -rule CMS-1701-P'
+- Example data can be downloaded using 'python Examples/CMS/Utils/CMSScraper.py CMS-2018-0101-0001'
 
 
