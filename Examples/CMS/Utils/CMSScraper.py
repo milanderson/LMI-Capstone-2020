@@ -72,7 +72,10 @@ def GetComments(driver, ruleName, dlPath):
     for i in range(2, count + 1):
         docName = root_doc_name + "-" + str(i).zfill(root_doc_pad_size)
         print("\tDownloading " + docName)
-        GetComment(driver, docName, dlPath) 
+        try:
+            GetComment(driver, docName, dlPath) 
+        except Exception as e:
+            print("Error encountered on document " + docName + ". ", e)
 
 def GetComment(driver, docName, dlPath):
     if not os.path.isfile(OUTPUT_PATH + docName + ".txt"):
