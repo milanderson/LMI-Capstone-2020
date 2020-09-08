@@ -59,7 +59,7 @@ def GetRule(driver, ruleName, dlPath):
         print("\tWriting rule text")
         f.close()
 
-def GetComments(driver, ruleName, dlPath):
+def GetComments(driver, ruleName, dlPath, stDocNum=2):
     driver.get(CMS_REG_DOCS_ROOT_PATH + ruleName)
     comment_browse_link = WebDriverWait(driver, 25).until(EC.presence_of_element_located((By.XPATH, CMS_COMMENT_BROWSE_XPATH)))
     comment_browse_link.click()
@@ -69,7 +69,7 @@ def GetComments(driver, ruleName, dlPath):
     root_doc_pts = doc_elem.text.split()[-1].split('-')
     root_doc_name = "-".join(root_doc_pts[:-1])
     root_doc_pad_size = len(root_doc_pts[-1])
-    for i in range(2, count + 1):
+    for i in range(stDocNum, count + 1):
         docName = root_doc_name + "-" + str(i).zfill(root_doc_pad_size)
         print("\tDownloading " + docName)
         try:
@@ -125,10 +125,11 @@ if __name__ == "__main__":
         print(USAGE)
     else:    
         try:
+            stDocNum = int(sys.argv[1].split('-')[-1])
             dlPath = DOWNLOAD_PATH if len(sys.argv) != 3 else sys.argv[2]
             driver = InitDriver(dlPath)
             print('Downloading Rule')
-            GetRule(driver, sys.argv[1], dlPath)
+            GetRule(driver, sys.argv[1], dlPath, stDocNum)
             print("Downloading Comments")
             GetComments(driver, sys.argv[1], dlPath)
             
