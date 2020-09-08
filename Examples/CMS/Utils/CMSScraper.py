@@ -125,13 +125,13 @@ if __name__ == "__main__":
         print(USAGE)
     else:    
         try:
-            stDocNum = int(sys.argv[1].split('-')[-1])
             dlPath = DOWNLOAD_PATH if len(sys.argv) != 3 else sys.argv[2]
             driver = InitDriver(dlPath)
             print('Downloading Rule')
-            GetRule(driver, sys.argv[1], dlPath, stDocNum)
+            GetRule(driver, sys.argv[1], dlPath)
             print("Downloading Comments")
-            GetComments(driver, sys.argv[1], dlPath)
+            stDocNum = int(sys.argv[1].split('-')[-1])
+            GetComments(driver, sys.argv[1], dlPath, stDocNum)
             
         except Exception as e:
             print(e)
