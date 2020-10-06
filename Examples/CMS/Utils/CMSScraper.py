@@ -32,29 +32,37 @@ USAGE = '''
             The output directory to save rules and comments to
 '''
 
-def GetText(el, pref=""):
-    text = pref + el.text
+def GetText(el, pref=["", 0], depth=0):
+    print(len(pref[0]), depth, pref[1])
+    text = pref[0] + el.text if not el.get_property('children') else ""
+    print(text)
     tagName = el.tag_name.lower()
     if "h" == tagName[0] and len(tagName) == 2:
-        pref += " "*(int(tagName[1]) - 2)
-    elif len(pref) == 0:
-        pref = "     "
+        newHlvl = int(tagName[1])
+        if newHlvl > pref[1]:
+            pref[0] += " "*(newHlvl - pref[1])
+        elif newHlvl < pref[1]:
+            pref[0] = pref[0][:(newHlvl - pref[1])]
+        pref[1] = newHlvl
 
     if tagName == "li" or tagName == "table":
-        text += "\n".join([GetText(c, pref + "    ") for c in el.get_property('children')])
+        newPref = [pref[0] + " "*4, pref[1]]
+        text += "\n".join([GetText(c, newPref, depth + 1) for c in el.get_property('children')])
     elif tagName == "tr":
-        text += ". ".join([GetText(c, pref) for c in el.get_property('children')])
+        newPref = [pref[0], pref[1]]
+        text += ". ".join([GetText(c, newPref, depth + 1) for c in el.get_property('children')])
     else:
-        text += "\n".join([GetText(c, pref) for c in el.get_property('children')])
+        newPref = [pref[0], pref[1]]
+        text += "\n".join([GetText(c, newPref, depth + 1) for c in el.get_property('children')])
     return text
 
 def GetRule(driver, ruleName, dlPath):
     if not os.path.isfile(OUTPUT_PATH + ruleName + ".txt"):
-        driver.get(CMS_REG_RULES_ROOT_PATH + ruleName)
+        driver.get(CMS_REG_DOCS_ROOT_PATH + ruleName)
         rule_el = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, CMS_RULE_XPATH)))
         print("\tRule found, extracting text")
         f = open(OUTPUT_PATH + ruleName + ".txt", 'w')
-        ruleText = GetText(rule_el).encode('ascii', errors='ignore').decode('ascii', errors='ignore')
+        ruleText = GetText(rule_el, ["", 0]).encode('ascii', errors='ignore').decode('ascii', errors='ignore')
         f.write(ruleText)
         print("\tWriting rule text")
         f.close()
@@ -82,7 +90,7 @@ def GetComment(driver, docName, dlPath):
         driver.get(CMS_REG_DOCS_ROOT_PATH + docName)
         comment = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, CMS_COMMENT_XPATH)))
         f = open(OUTPUT_PATH + docName + ".txt", 'w')
-        commentText = GetText(comment).encode('ascii', errors='ignore').decode('ascii', errors='ignore')
+        commentText = GetText(comment, ["", 0]).encode('ascii', errors='ignore').decode('ascii', errors='ignore')
         f.write(commentText)
         f.close()
 
