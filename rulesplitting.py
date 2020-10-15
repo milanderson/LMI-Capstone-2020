@@ -1,9 +1,8 @@
 '''
 Rule Splitting, Uploading to ES
 '''
-
 from elasticsearch import Elasticsearch
-es = Elasticsearch() #put the aws line here
+es = Elasticsearch() #put the aws url in here
 
 
 def splitRule():
@@ -11,7 +10,8 @@ def splitRule():
     return rulechunks
 
 
-def ruletoES(rulechunks, idstart):
-    for i, chunk in range(idstart, idstart+len(rulechunks)), rulechunks:
-        res = es.index(index=chunk["name"], id=i, body=doc)
-        
+def ruletoES(rulechunks, i):
+    for chunk in rulechunks:
+        res = es.index(index=chunk["name"], id=i, body=chunk)
+        i += 1
+    return i
