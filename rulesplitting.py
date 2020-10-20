@@ -12,6 +12,6 @@ def splitRule():
 
 def ruletoES(rulechunks, i):
     for chunk in rulechunks:
-        res = es.index(index=chunk["name"], id=i, body=chunk)
+        res = es.index(index=chunk["name"], id=i, body=chunk["text"])
         i += 1
     return i
