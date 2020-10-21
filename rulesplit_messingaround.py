@@ -1,7 +1,7 @@
 '''
 Three Different Rule-Splitting Methods
 '''
-
+import numpy as np
 import requests #gets urls
 
 rule_url = "https://mikeanders.org/data/CMS/CMS-2018-0101-0001/Rule/CMS-2018-0101-0001.txt"
@@ -106,6 +106,7 @@ lengths = [len(text) for key, value in testsplit.items() for text in value.value
 
 print(lengths)
 
+print(np.mean(lengths))
 
 
             
