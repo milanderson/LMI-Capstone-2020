@@ -88,16 +88,16 @@ def splitRule_chars(rule_url):
 
 def splitRule_headchars(rule_url):
     chunks = splitRule_headers(rule_url) #call first method
-    for key, value in chunks.items(): 
+    for key, value in chunks.items():
         if len(value) > 50000: #check to see if chunk is really long
             smalldict = {}
             chunklist = [value[i:i+25000] for i in range(0, len(value), 25000)] #split chunk
             keys = range(len(chunklist))
             for i in keys:
-                smalldict[i] = chunklist[i]
+                smalldict[key+str(i)] = chunklist[i]
             chunks[key] = smalldict
         else:
-            chunks[key] = {0: value}
+            chunks[key] = {key+str(0): value}
     return chunks
 
 testsplit = splitRule_headchars(rule_url)
@@ -108,6 +108,7 @@ print(lengths)
 
 print(np.mean(lengths))
 
+keys = [each_key for key, value in testsplit.items() for each_key in value.keys()]
 
-            
+print(keys)
 
