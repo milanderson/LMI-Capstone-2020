@@ -94,21 +94,22 @@ def splitRule_headchars(rule_url):
             chunklist = [value[i:i+25000] for i in range(0, len(value), 25000)] #split chunk
             keys = range(len(chunklist))
             for i in keys:
-                smalldict[key+str(i)] = chunklist[i]
-            chunks[key] = smalldict
+                smalldict[key+str(i)] = chunklist[i] #add to sub-dictionary
+            chunks[key] = smalldict #add to big dictionary
         else:
-            chunks[key] = {key+str(0): value}
+            chunks[key] = {key+str(0): value} #add to big dictionary
     return chunks
+
 
 testsplit = splitRule_headchars(rule_url)
 
 lengths = [len(text) for key, value in testsplit.items() for text in value.values()]
 
-print(lengths)
-
-print(np.mean(lengths))
-
 keys = [each_key for key, value in testsplit.items() for each_key in value.keys()]
 
-print(keys)
+#print(np.mean(lengths))
+
+keys_and_lengths = dict(zip(keys, lengths))
+
+print(keys_and_lengths)
 

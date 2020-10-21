@@ -14,13 +14,16 @@ def ruletoES_lists(rulechunks, i):
     for chunk in rulechunks:
         res = es.index(index=chunk.key, id=i, body=chunk.value)
         i += 1
-    return i
+    print(f"Last id uploaded: {i-1}")
 
 
 def ruletoES_dicts(rulechunks, i):
     for chunk in rulechunks:
-        for j, (key, value) in enumerate(chunk.items()):
-            res = es.index(index=chunk.key+key, id=i+j, body=value)
+        j = 0
+        for key, value in chunk.items():
+            res = es.index(index=key, id=i+j, body=value)
+            i += j
+            j += 1
         i += 1
-    return i
-    
+    print(f"Last id uploaded: {i-1}")
+
