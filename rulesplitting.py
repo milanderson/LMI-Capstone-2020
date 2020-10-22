@@ -10,19 +10,17 @@ def splitRule():
     #return rulechunks
 
 
-def ruletoES_lists(rulechunks, i):
+def ruletoES_lists(rulechunks, idnum):
     for chunk in rulechunks:
-        res = es.index(index=chunk.key, id=i, body=chunk.value)
-        i += 1
-    print(f"Last id uploaded: {i-1}")
+        res = es.index(index=chunk.key, id=idnum, body=chunk.value)
+        idnum += 1
+    print(f"Last id uploaded: {idnum-1}")
 
 
-def ruletoES_dicts(rulechunks, i):
+def ruletoES_dicts(rulechunks, idnum):
     for chunk in rulechunks:
-        j = 0
         for key, value in chunk.items():
-            res = es.index(index=key, id=i+j, body=value)
-            j += 1
-        i += j
-    print(f"Last id uploaded: {i-1}")
+            res = es.index(index=key, id=idnum, body=value)
+            idnum += 1
+    print(f"Last id uploaded: {idnum-1}")
 
