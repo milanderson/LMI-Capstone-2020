@@ -22,8 +22,7 @@ def ruletoES_dicts(rulechunks, i):
         j = 0
         for key, value in chunk.items():
             res = es.index(index=key, id=i+j, body=value)
-            i += j
             j += 1
-        i += 1
+        i += j
     print(f"Last id uploaded: {i-1}")
 
