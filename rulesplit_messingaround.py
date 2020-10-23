@@ -107,9 +107,11 @@ lengths = [len(text) for key, value in testsplit.items() for text in value.value
 
 keys = [each_key for key, value in testsplit.items() for each_key in value.keys()]
 
-#print(np.mean(lengths))
+text_starts = [text[0:30] for key, value in testsplit.items() for text in value.values()]
 
 keys_and_lengths = dict(zip(keys, lengths))
 
-print(keys_and_lengths)
+keys_and_text_start = dict(zip(keys, text_starts))
+
+print(splitRule_headers(rule_url).keys())
 
