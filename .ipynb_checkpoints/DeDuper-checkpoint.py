@@ -28,5 +28,5 @@ def getDupes(texts):
                 newGroup.append(toProcess.pop(idx)[0])
             groups.append(newGroup)
         if toProcess:
-            curText = toProcess.pop()
+            curIdx, curText = toProcess.pop()
     return groups
