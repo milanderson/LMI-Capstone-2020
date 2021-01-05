@@ -24,7 +24,7 @@ def getDupes(texts):
                 toComb.append((i, compIdx, textDist))
         if toComb:
             newGroup = [curIdx]
-            for idx, _, _ in toComb:
+            for idx, _, _ in reversed(toComb):
                 newGroup.append(toProcess.pop(idx)[0])
             groups.append(newGroup)
         if toProcess:
