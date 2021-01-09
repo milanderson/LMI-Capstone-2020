@@ -38,7 +38,7 @@ class skos2solr():
         rules = ""
         for c in concepts:
             try:
-                reflectives = [l + '1' for l in c.labels]
+                reflectives = [lab + app for lab in c.labels for app in '12']
                 rules += ", ".join(c.labels) + " => " + ", ".join(reflectives + c.synonyms + c.broader + c.narrower) + '\n'
             except Exception as e:
                 print(c.XMLNode.tag, c.XMLNode.attrib)
@@ -104,9 +104,10 @@ class Concept():
             elif propName == 'broader':
                 self.broader += Concept._split(p.text, '1')
             elif propName == 'narrower':
-                self.narrower += Concept._split(p.text, '1')
+                self.narrower += Concept._split(p.text, '2')
             elif propName == 'synonym':
                 self.synonyms += Concept._split(p.text, '1')
+                self.synonyms += Concept._split(p.text, '2')
 
     @staticmethod
     def _split(text, appendor=''):
