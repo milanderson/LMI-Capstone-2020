@@ -33,10 +33,8 @@ USAGE = '''
 '''
 
 def GetText(el, pref=["", 0], depth=0):
-    print(len(pref[0]), depth, pref[1])
-    text = pref[0] + el.text if not el.get_property('children') else ""
-    print(text)
     tagName = el.tag_name.lower()
+    text = pref[0] + el.text if not any(c.tag_name.lower() != 'br' for c in el.get_property('children')) or tagName[0] == "p" else ""
     if "h" == tagName[0] and len(tagName) == 2:
         newHlvl = int(tagName[1])
         if newHlvl > pref[1]:
